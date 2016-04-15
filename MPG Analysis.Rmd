@@ -1,0 +1,83 @@
+---
+title: "MotorTrend's Analysis of the Effects of Car Characteristics on MPG"
+author: "S. Duffy"
+date: "April 14, 2016"
+output: word_document
+---
+
+##Summary
+
+
+
+##Overview
+Historically, the anecdote most car drivers pass down to their children is that a vehicle 
+with a standard transmission is more fuel efficient than a vehicle with an automatic transmission.
+We here at MotorTrend Magazine love and trust our dads but we wanted to see if this anecdote 
+stands up to an analysis of the data.
+
+We were able to obtain rare data from industry insiders and have stored it in a dataset called
+mtcars.  The dataset has a structure like this:
+
+```{r}
+str(mtcars)
+```
+
+The definitions of the columns are thus:
+
+* mpg	= Miles/(US) gallon
+* cyl	= Number of cylinders
+* disp	= Displacement (cu.in.)
+* hp	= Gross horsepower
+* drat	= Rear axle ratio
+* wt	= Weight (1000 lbs)
+* qsec	= 1/4 mile time
+* vs	= V/S
+* am	= Transmission (0 = automatic, 1 = manual)
+* gear	= Number of forward gears
+* carb	= Number of carburetors
+
+What we're interested in is the mpg and am columns which have the following characteristics
+
+```{r}
+a <- summary(mtcars$mpg)
+b <- nrow(mtcars)
+man <- sum(mtcars$am)
+auto <- b-man
+```
+
+The mpg column has a range from `r a[1]` mpg to `r a[6]` mpg with a mean of `r a[4]`.  
+
+Out of the `r b` vehicles in the dataset, `r man` are manual transmissions and `r auto` are automatic transmissions.
+
+Is there are noticeable difference in MPG in the two different transmission types?  A plot shows yes.
+The blue line is the average for 1s, the manual transmissions and the red line is the average for 
+0s, the automatic transmissions.
+
+```{r}
+plot(mtcars$am,mtcars$mpg, ylab = "MPG", xlab = "Transmission 1=auto", main = "MPG by Transmission with Avgs")
+  abline(h=mean(subset(mtcars, am == 0)$mpg),col = 'red')
+  abline(h=mean(subset(mtcars, am == 1)$mpg),col = 'blue')
+```
+
+
+##Is an automatic or manual transmission better for MPG?
+The question we'll explore is, "Is an automatic or manual transmission better for MPG?"  Of course, 
+there are a lot of moving pieces in a vehicle that can contribute to varying levels of MPG, many of 
+which are in the dataset.  First, we'll explore our question just using the two variables in the 
+question, mpg and am.
+
+
+```{r}
+##mdl <- glm(mpg ~ am,binomial,mtcars)
+```
+
+
+
+
+##
+
+```{r, echo=FALSE}
+plot(cars)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
