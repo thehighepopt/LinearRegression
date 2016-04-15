@@ -54,9 +54,12 @@ The blue line is the average for 1s, the manual transmissions and the red line i
 0s, the automatic transmissions.
 
 ```{r}
+mancars <- subset(mtcars, am == 0)
+autocars <- subset(mtcars, am == 1)
+
 plot(mtcars$am,mtcars$mpg, ylab = "MPG", xlab = "Transmission 1=auto", main = "MPG by Transmission with Avgs")
-  abline(h=mean(subset(mtcars, am == 0)$mpg),col = 'red')
-  abline(h=mean(subset(mtcars, am == 1)$mpg),col = 'blue')
+  abline(h=mean(mancars$mpg),col = 'red')
+  abline(h=mean(autocars$mpg),col = 'blue')
 ```
 
 
@@ -66,12 +69,17 @@ there are a lot of moving pieces in a vehicle that can contribute to varying lev
 which are in the dataset.  First, we'll explore our question just using the two variables in the 
 question, mpg and am.
 
+For this section, we'll use the mpg as the dependent variable and transmission as a predictor
 
 ```{r}
-##mdl <- glm(mpg ~ am,binomial,mtcars)
+mdl <- lm(mpg ~ am,mtcars)
+summary(mdl)  
 ```
 
-
+Much like in the plot above, one can see the intercept is at the average of the automatic transmission
+vehicles and the slope rises 7.25 MPG to the manual transmission. The coeffiecient of the slope for auto/
+manual has a p value of 0.000285, thus, we can reject the null hypothesis that there is no difference
+in the mpg between manual and automatic transmissions.
 
 
 ##
